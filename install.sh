@@ -1,18 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-echo "==> Installing fonts..."
-sudo pacman -S --noconfirm --needed \
-    noto-fonts \
-    noto-fonts-extra \
-    noto-fonts-cjk \
-    ttf-nerd-fonts-symbols \
-    ttf-nerd-fonts-symbols-common \
-    ttf-jetbrains-mono-nerd
-
-yay -S --noconfirm --needed ttf-noto-nerd
-yay -S --noconfirm --needed ttf-iosevka
-
 echo "==> Installing required packages..."
 sudo pacman -S --needed --noconfirm \
     imlib2 dash kitty starship zsh exa \
@@ -51,6 +39,11 @@ sudo cp -r .icons "$HOME"
 sudo cp usr/sbin/* /usr/sbin/
 sudo cp -r usr/share/* /usr/share
 sudo cp .Xresources "$HOME"
+
+echo "==> Building QOL Packages..."
+cd "$HOME"/.config/AnDWM/scripts/
+g++ -Ofast -march=native cpp/claim-clip.cpp -o claim-clip -lX11 -lXfixes
+g++ -Ofast -march=native cpp/bar.cpp -o bar
 
 echo "==> Building and installing AnDWM..."
 cd "$HOME/.config/AnDWM/AnDWM/"
