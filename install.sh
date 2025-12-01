@@ -5,12 +5,29 @@ echo "==> Installing required packages..."
 sudo pacman -S --needed --noconfirm \
     imlib2 dash kitty starship zsh exa \
     rofi flameshot nemo zig libc++ pam libxcb xcb-util picom zen-browser-bin \
+    imlib2 kitty starship exa \
+    rofi flameshot nemo zig libc++ pam libxcb xcb-util picom zen-browser-bin \
+    base-devel xorgproto libx11 libxext libxrandr libxinerama libxrender libxft \
+    libxfixes libxdamage libxcomposite libxmu libxtst p7zip
 
 echo "==> Installing cursor..."
 yay -S --noconfirm --needed bibata-cursor-theme-bin
 
 echo "==> Installing greenclip..."
 yay -S --noconfirm --needed rofi-greenclip 
+yay -S --noconfirm --needed rofi-greenclip 
+
+sudo cp -r AnDWM "$HOME"/.config/
+
+echo "==> Installing fonts..."
+sudo pacman -S --needed ttf-iosevka-nerd noto-fonts noto-fonts-cjk noto-fonts-extra ttf-hack-nerd
+yay -S --noconfirm --needed ttf-iosevka
+cd ~/.local/share/fonts/
+sudo wget https://github.com/be5invis/Sarasa-Gothic/releases/download/v1.0.35/Sarasa-SuperTTC-1.0.35.7z
+sudo 7z x Sarasa-SuperTTC-1.0.35.7z
+rm Sarasa-SuperTTC-1.0.35.7z
+fc-cache -fv
+cd "$HOME"/.config/AnDWM/
 
 # -------------------------
 # ASK BEFORE ENABLING LY
@@ -45,6 +62,11 @@ cd "$HOME"/.config/AnDWM/scripts/
 g++ -Ofast -march=native cpp/claim-clip.cpp -o claim-clip -lX11 -lXfixes
 g++ -Ofast -march=native cpp/bar.cpp -o bar
 
+echo "==> Building QOL Packages..."
+cd "$HOME"/.config/AnDWM/scripts/
+g++ -Ofast -march=native cpp/claim-clip.cpp -o claim-clip -lX11 -lXfixes
+g++ -Ofast -march=native cpp/bar.cpp -o bar
+
 echo "==> Building and installing AnDWM..."
 cd "$HOME/.config/AnDWM/AnDWM/"
 sudo make install
@@ -63,3 +85,4 @@ EOF
 echo "==> Installation complete!"
 echo "Reboot and select 'AnDWM' on login."
 echo "Thank you for chadwm"
+
